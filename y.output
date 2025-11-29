@@ -1,0 +1,1128 @@
+Terminals unused in grammar
+
+    or
+    and
+
+
+Grammar
+
+    0 $accept: Start $end
+
+    1 $@1: %empty
+
+    2 Start: LBracket $@1 List RBracket
+
+    3 List: Comp List
+    4     | Comp
+    5     | IF '(' Cond ')' LBracket List RBracket
+    6     | IF '(' Cond ')' LBracket List RBracket ELSE LBracket List RBracket
+    7     | While '(' Cond ')' LBracket List RBracket
+
+    8 Comp: Block
+    9     | TYPE Expr ';'
+   10     | Stmt ';'
+
+   11 $@2: %empty
+
+   12 Stmt: ID $@2 '=' Arth
+   13     | ID INC
+   14     | ID DEC
+
+   15 Arth: Arth '+' Term
+   16     | Arth '-' Term
+   17     | Term
+
+   18 Term: Term '*' Fact
+   19     | Term '/' Fact
+   20     | Fact
+
+   21 Fact: '(' Arth ')'
+   22     | NUM
+   23     | FloatNUM
+   24     | DoubleNUM
+   25     | ID
+   26     | '(' TYPE ')' ID
+   27     | ID INC
+   28     | ID DEC
+   29     | '(' TYPE ')' ID INC
+   30     | '(' TYPE ')' ID DEC
+   31     | INC ID
+   32     | DEC ID
+   33     | '(' TYPE ')' INC ID
+   34     | '(' TYPE ')' DEC ID
+
+   35 TYPE: CHAR
+   36     | INT
+   37     | LONG
+   38     | FLOAT
+   39     | DOUBLE
+   40     | STRING
+
+   41 $@3: %empty
+
+   42 Block: LBracket $@3 List RBracket
+
+   43 $@4: %empty
+
+   44 Expr: ID $@4 ',' Expr
+   45     | ID
+   46     | ID '[' NUM ']'
+
+   47 $@5: %empty
+
+   48 Expr: ID $@5 '=' Arth
+
+   49 Cond: ID COMP ID
+   50     | NUM COMP ID
+   51     | ID COMP NUM
+   52     | NUM COMP NUM
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '(' (40) 5 6 7 21 26 29 30 33 34
+    ')' (41) 5 6 7 21 26 29 30 33 34
+    '*' (42) 18
+    '+' (43) 15
+    ',' (44) 44
+    '-' (45) 16
+    '/' (47) 19
+    ';' (59) 9 10
+    '=' (61) 12 48
+    '[' (91) 46
+    ']' (93) 46
+    error (256)
+    FloatNUM <addr> (258) 23
+    DoubleNUM <addr> (259) 24
+    NUM <addr> (260) 22 46 50 51 52
+    ID <addr> (261) 12 13 14 25 26 27 28 29 30 31 32 33 34 44 45 46 48 49 50 51
+    INT <addr> (262) 36
+    LONG <addr> (263) 37
+    FLOAT <addr> (264) 38
+    DOUBLE <addr> (265) 39
+    STRING <addr> (266) 40
+    CHAR <addr> (267) 35
+    LBracket <addr> (268) 2 5 6 7 42
+    RBracket <addr> (269) 2 5 6 7 42
+    INC <addr> (270) 13 27 29 31 33
+    DEC <addr> (271) 14 28 30 32 34
+    COMP <addr> (272) 49 50 51 52
+    IF <addr> (273) 5 6
+    ELSE <addr> (274) 6
+    While <addr> (275) 7
+    or <addr> (276)
+    and <addr> (277)
+
+
+Nonterminals, with rules where they appear
+
+    $accept (34)
+        on left: 0
+    Start <eval> (35)
+        on left: 2
+        on right: 0
+    $@1 (36)
+        on left: 1
+        on right: 2
+    List <eval> (37)
+        on left: 3 4 5 6 7
+        on right: 2 3 5 6 7 42
+    Comp <eval> (38)
+        on left: 8 9 10
+        on right: 3 4
+    Stmt <eval> (39)
+        on left: 12 13 14
+        on right: 10
+    $@2 (40)
+        on left: 11
+        on right: 12
+    Arth <eval> (41)
+        on left: 15 16 17
+        on right: 12 15 16 21 48
+    Term <eval> (42)
+        on left: 18 19 20
+        on right: 15 16 17 18 19
+    Fact <eval> (43)
+        on left: 21 22 23 24 25 26 27 28 29 30 31 32 33 34
+        on right: 18 19 20
+    TYPE <TypeNode> (44)
+        on left: 35 36 37 38 39 40
+        on right: 9 26 29 30 33 34
+    Block <eval> (45)
+        on left: 42
+        on right: 8
+    $@3 (46)
+        on left: 41
+        on right: 42
+    Expr <eval> (47)
+        on left: 44 45 46 48
+        on right: 9 44
+    $@4 (48)
+        on left: 43
+        on right: 44
+    $@5 (49)
+        on left: 47
+        on right: 48
+    Cond <eval> (50)
+        on left: 49 50 51 52
+        on right: 5 6 7
+
+
+State 0
+
+    0 $accept: . Start $end
+
+    LBracket  shift, and go to state 1
+
+    Start  go to state 2
+
+
+State 1
+
+    2 Start: LBracket . $@1 List RBracket
+
+    $default  reduce using rule 1 ($@1)
+
+    $@1  go to state 3
+
+
+State 2
+
+    0 $accept: Start . $end
+
+    $end  shift, and go to state 4
+
+
+State 3
+
+    2 Start: LBracket $@1 . List RBracket
+
+    ID        shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    FLOAT     shift, and go to state 8
+    DOUBLE    shift, and go to state 9
+    STRING    shift, and go to state 10
+    CHAR      shift, and go to state 11
+    LBracket  shift, and go to state 12
+    IF        shift, and go to state 13
+    While     shift, and go to state 14
+
+    List   go to state 15
+    Comp   go to state 16
+    Stmt   go to state 17
+    TYPE   go to state 18
+    Block  go to state 19
+
+
+State 4
+
+    0 $accept: Start $end .
+
+    $default  accept
+
+
+State 5
+
+   12 Stmt: ID . $@2 '=' Arth
+   13     | ID . INC
+   14     | ID . DEC
+
+    INC  shift, and go to state 20
+    DEC  shift, and go to state 21
+
+    $default  reduce using rule 11 ($@2)
+
+    $@2  go to state 22
+
+
+State 6
+
+   36 TYPE: INT .
+
+    $default  reduce using rule 36 (TYPE)
+
+
+State 7
+
+   37 TYPE: LONG .
+
+    $default  reduce using rule 37 (TYPE)
+
+
+State 8
+
+   38 TYPE: FLOAT .
+
+    $default  reduce using rule 38 (TYPE)
+
+
+State 9
+
+   39 TYPE: DOUBLE .
+
+    $default  reduce using rule 39 (TYPE)
+
+
+State 10
+
+   40 TYPE: STRING .
+
+    $default  reduce using rule 40 (TYPE)
+
+
+State 11
+
+   35 TYPE: CHAR .
+
+    $default  reduce using rule 35 (TYPE)
+
+
+State 12
+
+   42 Block: LBracket . $@3 List RBracket
+
+    $default  reduce using rule 41 ($@3)
+
+    $@3  go to state 23
+
+
+State 13
+
+    5 List: IF . '(' Cond ')' LBracket List RBracket
+    6     | IF . '(' Cond ')' LBracket List RBracket ELSE LBracket List RBracket
+
+    '('  shift, and go to state 24
+
+
+State 14
+
+    7 List: While . '(' Cond ')' LBracket List RBracket
+
+    '('  shift, and go to state 25
+
+
+State 15
+
+    2 Start: LBracket $@1 List . RBracket
+
+    RBracket  shift, and go to state 26
+
+
+State 16
+
+    3 List: Comp . List
+    4     | Comp .
+
+    ID        shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    FLOAT     shift, and go to state 8
+    DOUBLE    shift, and go to state 9
+    STRING    shift, and go to state 10
+    CHAR      shift, and go to state 11
+    LBracket  shift, and go to state 12
+    IF        shift, and go to state 13
+    While     shift, and go to state 14
+
+    $default  reduce using rule 4 (List)
+
+    List   go to state 27
+    Comp   go to state 16
+    Stmt   go to state 17
+    TYPE   go to state 18
+    Block  go to state 19
+
+
+State 17
+
+   10 Comp: Stmt . ';'
+
+    ';'  shift, and go to state 28
+
+
+State 18
+
+    9 Comp: TYPE . Expr ';'
+
+    ID  shift, and go to state 29
+
+    Expr  go to state 30
+
+
+State 19
+
+    8 Comp: Block .
+
+    $default  reduce using rule 8 (Comp)
+
+
+State 20
+
+   13 Stmt: ID INC .
+
+    $default  reduce using rule 13 (Stmt)
+
+
+State 21
+
+   14 Stmt: ID DEC .
+
+    $default  reduce using rule 14 (Stmt)
+
+
+State 22
+
+   12 Stmt: ID $@2 . '=' Arth
+
+    '='  shift, and go to state 31
+
+
+State 23
+
+   42 Block: LBracket $@3 . List RBracket
+
+    ID        shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    FLOAT     shift, and go to state 8
+    DOUBLE    shift, and go to state 9
+    STRING    shift, and go to state 10
+    CHAR      shift, and go to state 11
+    LBracket  shift, and go to state 12
+    IF        shift, and go to state 13
+    While     shift, and go to state 14
+
+    List   go to state 32
+    Comp   go to state 16
+    Stmt   go to state 17
+    TYPE   go to state 18
+    Block  go to state 19
+
+
+State 24
+
+    5 List: IF '(' . Cond ')' LBracket List RBracket
+    6     | IF '(' . Cond ')' LBracket List RBracket ELSE LBracket List RBracket
+
+    NUM  shift, and go to state 33
+    ID   shift, and go to state 34
+
+    Cond  go to state 35
+
+
+State 25
+
+    7 List: While '(' . Cond ')' LBracket List RBracket
+
+    NUM  shift, and go to state 33
+    ID   shift, and go to state 34
+
+    Cond  go to state 36
+
+
+State 26
+
+    2 Start: LBracket $@1 List RBracket .
+
+    $default  reduce using rule 2 (Start)
+
+
+State 27
+
+    3 List: Comp List .
+
+    $default  reduce using rule 3 (List)
+
+
+State 28
+
+   10 Comp: Stmt ';' .
+
+    $default  reduce using rule 10 (Comp)
+
+
+State 29
+
+   44 Expr: ID . $@4 ',' Expr
+   45     | ID .
+   46     | ID . '[' NUM ']'
+   48     | ID . $@5 '=' Arth
+
+    '['  shift, and go to state 37
+
+    ';'       reduce using rule 45 (Expr)
+    '='       reduce using rule 47 ($@5)
+    $default  reduce using rule 43 ($@4)
+
+    $@4  go to state 38
+    $@5  go to state 39
+
+
+State 30
+
+    9 Comp: TYPE Expr . ';'
+
+    ';'  shift, and go to state 40
+
+
+State 31
+
+   12 Stmt: ID $@2 '=' . Arth
+
+    FloatNUM   shift, and go to state 41
+    DoubleNUM  shift, and go to state 42
+    NUM        shift, and go to state 43
+    ID         shift, and go to state 44
+    INC        shift, and go to state 45
+    DEC        shift, and go to state 46
+    '('        shift, and go to state 47
+
+    Arth  go to state 48
+    Term  go to state 49
+    Fact  go to state 50
+
+
+State 32
+
+   42 Block: LBracket $@3 List . RBracket
+
+    RBracket  shift, and go to state 51
+
+
+State 33
+
+   50 Cond: NUM . COMP ID
+   52     | NUM . COMP NUM
+
+    COMP  shift, and go to state 52
+
+
+State 34
+
+   49 Cond: ID . COMP ID
+   51     | ID . COMP NUM
+
+    COMP  shift, and go to state 53
+
+
+State 35
+
+    5 List: IF '(' Cond . ')' LBracket List RBracket
+    6     | IF '(' Cond . ')' LBracket List RBracket ELSE LBracket List RBracket
+
+    ')'  shift, and go to state 54
+
+
+State 36
+
+    7 List: While '(' Cond . ')' LBracket List RBracket
+
+    ')'  shift, and go to state 55
+
+
+State 37
+
+   46 Expr: ID '[' . NUM ']'
+
+    NUM  shift, and go to state 56
+
+
+State 38
+
+   44 Expr: ID $@4 . ',' Expr
+
+    ','  shift, and go to state 57
+
+
+State 39
+
+   48 Expr: ID $@5 . '=' Arth
+
+    '='  shift, and go to state 58
+
+
+State 40
+
+    9 Comp: TYPE Expr ';' .
+
+    $default  reduce using rule 9 (Comp)
+
+
+State 41
+
+   23 Fact: FloatNUM .
+
+    $default  reduce using rule 23 (Fact)
+
+
+State 42
+
+   24 Fact: DoubleNUM .
+
+    $default  reduce using rule 24 (Fact)
+
+
+State 43
+
+   22 Fact: NUM .
+
+    $default  reduce using rule 22 (Fact)
+
+
+State 44
+
+   25 Fact: ID .
+   27     | ID . INC
+   28     | ID . DEC
+
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+
+    $default  reduce using rule 25 (Fact)
+
+
+State 45
+
+   31 Fact: INC . ID
+
+    ID  shift, and go to state 61
+
+
+State 46
+
+   32 Fact: DEC . ID
+
+    ID  shift, and go to state 62
+
+
+State 47
+
+   21 Fact: '(' . Arth ')'
+   26     | '(' . TYPE ')' ID
+   29     | '(' . TYPE ')' ID INC
+   30     | '(' . TYPE ')' ID DEC
+   33     | '(' . TYPE ')' INC ID
+   34     | '(' . TYPE ')' DEC ID
+
+    FloatNUM   shift, and go to state 41
+    DoubleNUM  shift, and go to state 42
+    NUM        shift, and go to state 43
+    ID         shift, and go to state 44
+    INT        shift, and go to state 6
+    LONG       shift, and go to state 7
+    FLOAT      shift, and go to state 8
+    DOUBLE     shift, and go to state 9
+    STRING     shift, and go to state 10
+    CHAR       shift, and go to state 11
+    INC        shift, and go to state 45
+    DEC        shift, and go to state 46
+    '('        shift, and go to state 47
+
+    Arth  go to state 63
+    Term  go to state 49
+    Fact  go to state 50
+    TYPE  go to state 64
+
+
+State 48
+
+   12 Stmt: ID $@2 '=' Arth .
+   15 Arth: Arth . '+' Term
+   16     | Arth . '-' Term
+
+    '+'  shift, and go to state 65
+    '-'  shift, and go to state 66
+
+    $default  reduce using rule 12 (Stmt)
+
+
+State 49
+
+   17 Arth: Term .
+   18 Term: Term . '*' Fact
+   19     | Term . '/' Fact
+
+    '*'  shift, and go to state 67
+    '/'  shift, and go to state 68
+
+    $default  reduce using rule 17 (Arth)
+
+
+State 50
+
+   20 Term: Fact .
+
+    $default  reduce using rule 20 (Term)
+
+
+State 51
+
+   42 Block: LBracket $@3 List RBracket .
+
+    $default  reduce using rule 42 (Block)
+
+
+State 52
+
+   50 Cond: NUM COMP . ID
+   52     | NUM COMP . NUM
+
+    NUM  shift, and go to state 69
+    ID   shift, and go to state 70
+
+
+State 53
+
+   49 Cond: ID COMP . ID
+   51     | ID COMP . NUM
+
+    NUM  shift, and go to state 71
+    ID   shift, and go to state 72
+
+
+State 54
+
+    5 List: IF '(' Cond ')' . LBracket List RBracket
+    6     | IF '(' Cond ')' . LBracket List RBracket ELSE LBracket List RBracket
+
+    LBracket  shift, and go to state 73
+
+
+State 55
+
+    7 List: While '(' Cond ')' . LBracket List RBracket
+
+    LBracket  shift, and go to state 74
+
+
+State 56
+
+   46 Expr: ID '[' NUM . ']'
+
+    ']'  shift, and go to state 75
+
+
+State 57
+
+   44 Expr: ID $@4 ',' . Expr
+
+    ID  shift, and go to state 29
+
+    Expr  go to state 76
+
+
+State 58
+
+   48 Expr: ID $@5 '=' . Arth
+
+    FloatNUM   shift, and go to state 41
+    DoubleNUM  shift, and go to state 42
+    NUM        shift, and go to state 43
+    ID         shift, and go to state 44
+    INC        shift, and go to state 45
+    DEC        shift, and go to state 46
+    '('        shift, and go to state 47
+
+    Arth  go to state 77
+    Term  go to state 49
+    Fact  go to state 50
+
+
+State 59
+
+   27 Fact: ID INC .
+
+    $default  reduce using rule 27 (Fact)
+
+
+State 60
+
+   28 Fact: ID DEC .
+
+    $default  reduce using rule 28 (Fact)
+
+
+State 61
+
+   31 Fact: INC ID .
+
+    $default  reduce using rule 31 (Fact)
+
+
+State 62
+
+   32 Fact: DEC ID .
+
+    $default  reduce using rule 32 (Fact)
+
+
+State 63
+
+   15 Arth: Arth . '+' Term
+   16     | Arth . '-' Term
+   21 Fact: '(' Arth . ')'
+
+    ')'  shift, and go to state 78
+    '+'  shift, and go to state 65
+    '-'  shift, and go to state 66
+
+
+State 64
+
+   26 Fact: '(' TYPE . ')' ID
+   29     | '(' TYPE . ')' ID INC
+   30     | '(' TYPE . ')' ID DEC
+   33     | '(' TYPE . ')' INC ID
+   34     | '(' TYPE . ')' DEC ID
+
+    ')'  shift, and go to state 79
+
+
+State 65
+
+   15 Arth: Arth '+' . Term
+
+    FloatNUM   shift, and go to state 41
+    DoubleNUM  shift, and go to state 42
+    NUM        shift, and go to state 43
+    ID         shift, and go to state 44
+    INC        shift, and go to state 45
+    DEC        shift, and go to state 46
+    '('        shift, and go to state 47
+
+    Term  go to state 80
+    Fact  go to state 50
+
+
+State 66
+
+   16 Arth: Arth '-' . Term
+
+    FloatNUM   shift, and go to state 41
+    DoubleNUM  shift, and go to state 42
+    NUM        shift, and go to state 43
+    ID         shift, and go to state 44
+    INC        shift, and go to state 45
+    DEC        shift, and go to state 46
+    '('        shift, and go to state 47
+
+    Term  go to state 81
+    Fact  go to state 50
+
+
+State 67
+
+   18 Term: Term '*' . Fact
+
+    FloatNUM   shift, and go to state 41
+    DoubleNUM  shift, and go to state 42
+    NUM        shift, and go to state 43
+    ID         shift, and go to state 44
+    INC        shift, and go to state 45
+    DEC        shift, and go to state 46
+    '('        shift, and go to state 47
+
+    Fact  go to state 82
+
+
+State 68
+
+   19 Term: Term '/' . Fact
+
+    FloatNUM   shift, and go to state 41
+    DoubleNUM  shift, and go to state 42
+    NUM        shift, and go to state 43
+    ID         shift, and go to state 44
+    INC        shift, and go to state 45
+    DEC        shift, and go to state 46
+    '('        shift, and go to state 47
+
+    Fact  go to state 83
+
+
+State 69
+
+   52 Cond: NUM COMP NUM .
+
+    $default  reduce using rule 52 (Cond)
+
+
+State 70
+
+   50 Cond: NUM COMP ID .
+
+    $default  reduce using rule 50 (Cond)
+
+
+State 71
+
+   51 Cond: ID COMP NUM .
+
+    $default  reduce using rule 51 (Cond)
+
+
+State 72
+
+   49 Cond: ID COMP ID .
+
+    $default  reduce using rule 49 (Cond)
+
+
+State 73
+
+    5 List: IF '(' Cond ')' LBracket . List RBracket
+    6     | IF '(' Cond ')' LBracket . List RBracket ELSE LBracket List RBracket
+
+    ID        shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    FLOAT     shift, and go to state 8
+    DOUBLE    shift, and go to state 9
+    STRING    shift, and go to state 10
+    CHAR      shift, and go to state 11
+    LBracket  shift, and go to state 12
+    IF        shift, and go to state 13
+    While     shift, and go to state 14
+
+    List   go to state 84
+    Comp   go to state 16
+    Stmt   go to state 17
+    TYPE   go to state 18
+    Block  go to state 19
+
+
+State 74
+
+    7 List: While '(' Cond ')' LBracket . List RBracket
+
+    ID        shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    FLOAT     shift, and go to state 8
+    DOUBLE    shift, and go to state 9
+    STRING    shift, and go to state 10
+    CHAR      shift, and go to state 11
+    LBracket  shift, and go to state 12
+    IF        shift, and go to state 13
+    While     shift, and go to state 14
+
+    List   go to state 85
+    Comp   go to state 16
+    Stmt   go to state 17
+    TYPE   go to state 18
+    Block  go to state 19
+
+
+State 75
+
+   46 Expr: ID '[' NUM ']' .
+
+    $default  reduce using rule 46 (Expr)
+
+
+State 76
+
+   44 Expr: ID $@4 ',' Expr .
+
+    $default  reduce using rule 44 (Expr)
+
+
+State 77
+
+   15 Arth: Arth . '+' Term
+   16     | Arth . '-' Term
+   48 Expr: ID $@5 '=' Arth .
+
+    '+'  shift, and go to state 65
+    '-'  shift, and go to state 66
+
+    $default  reduce using rule 48 (Expr)
+
+
+State 78
+
+   21 Fact: '(' Arth ')' .
+
+    $default  reduce using rule 21 (Fact)
+
+
+State 79
+
+   26 Fact: '(' TYPE ')' . ID
+   29     | '(' TYPE ')' . ID INC
+   30     | '(' TYPE ')' . ID DEC
+   33     | '(' TYPE ')' . INC ID
+   34     | '(' TYPE ')' . DEC ID
+
+    ID   shift, and go to state 86
+    INC  shift, and go to state 87
+    DEC  shift, and go to state 88
+
+
+State 80
+
+   15 Arth: Arth '+' Term .
+   18 Term: Term . '*' Fact
+   19     | Term . '/' Fact
+
+    '*'  shift, and go to state 67
+    '/'  shift, and go to state 68
+
+    $default  reduce using rule 15 (Arth)
+
+
+State 81
+
+   16 Arth: Arth '-' Term .
+   18 Term: Term . '*' Fact
+   19     | Term . '/' Fact
+
+    '*'  shift, and go to state 67
+    '/'  shift, and go to state 68
+
+    $default  reduce using rule 16 (Arth)
+
+
+State 82
+
+   18 Term: Term '*' Fact .
+
+    $default  reduce using rule 18 (Term)
+
+
+State 83
+
+   19 Term: Term '/' Fact .
+
+    $default  reduce using rule 19 (Term)
+
+
+State 84
+
+    5 List: IF '(' Cond ')' LBracket List . RBracket
+    6     | IF '(' Cond ')' LBracket List . RBracket ELSE LBracket List RBracket
+
+    RBracket  shift, and go to state 89
+
+
+State 85
+
+    7 List: While '(' Cond ')' LBracket List . RBracket
+
+    RBracket  shift, and go to state 90
+
+
+State 86
+
+   26 Fact: '(' TYPE ')' ID .
+   29     | '(' TYPE ')' ID . INC
+   30     | '(' TYPE ')' ID . DEC
+
+    INC  shift, and go to state 91
+    DEC  shift, and go to state 92
+
+    $default  reduce using rule 26 (Fact)
+
+
+State 87
+
+   33 Fact: '(' TYPE ')' INC . ID
+
+    ID  shift, and go to state 93
+
+
+State 88
+
+   34 Fact: '(' TYPE ')' DEC . ID
+
+    ID  shift, and go to state 94
+
+
+State 89
+
+    5 List: IF '(' Cond ')' LBracket List RBracket .
+    6     | IF '(' Cond ')' LBracket List RBracket . ELSE LBracket List RBracket
+
+    ELSE  shift, and go to state 95
+
+    $default  reduce using rule 5 (List)
+
+
+State 90
+
+    7 List: While '(' Cond ')' LBracket List RBracket .
+
+    $default  reduce using rule 7 (List)
+
+
+State 91
+
+   29 Fact: '(' TYPE ')' ID INC .
+
+    $default  reduce using rule 29 (Fact)
+
+
+State 92
+
+   30 Fact: '(' TYPE ')' ID DEC .
+
+    $default  reduce using rule 30 (Fact)
+
+
+State 93
+
+   33 Fact: '(' TYPE ')' INC ID .
+
+    $default  reduce using rule 33 (Fact)
+
+
+State 94
+
+   34 Fact: '(' TYPE ')' DEC ID .
+
+    $default  reduce using rule 34 (Fact)
+
+
+State 95
+
+    6 List: IF '(' Cond ')' LBracket List RBracket ELSE . LBracket List RBracket
+
+    LBracket  shift, and go to state 96
+
+
+State 96
+
+    6 List: IF '(' Cond ')' LBracket List RBracket ELSE LBracket . List RBracket
+
+    ID        shift, and go to state 5
+    INT       shift, and go to state 6
+    LONG      shift, and go to state 7
+    FLOAT     shift, and go to state 8
+    DOUBLE    shift, and go to state 9
+    STRING    shift, and go to state 10
+    CHAR      shift, and go to state 11
+    LBracket  shift, and go to state 12
+    IF        shift, and go to state 13
+    While     shift, and go to state 14
+
+    List   go to state 97
+    Comp   go to state 16
+    Stmt   go to state 17
+    TYPE   go to state 18
+    Block  go to state 19
+
+
+State 97
+
+    6 List: IF '(' Cond ')' LBracket List RBracket ELSE LBracket List . RBracket
+
+    RBracket  shift, and go to state 98
+
+
+State 98
+
+    6 List: IF '(' Cond ')' LBracket List RBracket ELSE LBracket List RBracket .
+
+    $default  reduce using rule 6 (List)
