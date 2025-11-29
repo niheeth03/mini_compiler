@@ -27,7 +27,7 @@ Make sure you have installed:
 
 - GCC (or a C compiler)  
 - `make`  
-- `yacc` / `bison` and `lex` / `flex` (for lexical and syntax parsing)  
+- `yacc` and `lex`  (for lexical and syntax parsing)  
 - Standard Unix-like environment (Linux / macOS / WSL / etc.)  
 
 ## Build & Run Instructions
@@ -35,11 +35,8 @@ Make sure you have installed:
 ```bash
 # At the root of the repo:
 make clean      # optional, to clean previous build artifacts
-make            # builds the compiler / assembler / VM
+make            # builds the compiler 
 
 # To compile a test program (e.g. test1.c):
-./parser     test1.c   # or the actual executable name — replace if different
-# This should output assembly / intermediate / binary depending on design
+./parser     test1.c  
 
-# Then (if applicable) run the result:
-./vm           output_file   # or run the generated binary
